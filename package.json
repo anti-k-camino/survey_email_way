@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "node && react+redux surveyees emailing",
+  "main": "index.js",
+  "engines": {
+    "node": "13.5.0",
+    "npm": "6.14.5"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mongo",
+    "mongoose",
+    "passport",
+    "googleAuth"
+  ],
+  "author": "anti-k-camino",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
