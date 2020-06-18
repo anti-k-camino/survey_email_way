@@ -1,26 +1,32 @@
 const express = require('express');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const keys = require('./config/keys');
 
 const app = express();
 
-// 92672626140-u0t1k2nkvm6l24q5qnppthto3t27q524.apps.googleusercontent.com
-
-// VatzstSNOeVJ7WwkqnttPnXa
-
 passport.use(new GoogleStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://www.example.com/auth/google/callback'
+    clientID: keys.googleClientID,
+    clientSecret: keys.googleClientSecret,
+    callbackURL: '/auth/google/callback'
   }, (accessToken, refreshToken, profile, cb) => {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }));
+    console.log('Access token c==> ', accessToken);
+    console.log('Refresh token c==> ', refreshToken);
+    console.log('Profile ==> ', profile);
+    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
+    //   return cb(err, user);
+    // });
+}));
 
 app.get('/', (req, res) => {
-  res.send({ msg: 'Hello' }));
-};
+  res.send({ msg: 'Hello' });
+});
+
+app.get('/auth/google', passport.authenticate('google', {
+  scope: ['profile', 'email']
+}));
+
+app.get('/auth/google/callback', passport.authenticate('google'));
 
 const port = process.env.PORT || 3000;
 
